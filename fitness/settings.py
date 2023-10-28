@@ -75,18 +75,9 @@ WSGI_APPLICATION = 'fitness.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django_cockroachdb',
-        'NAME': 'defaultdb',
-        'USER': 'june',
-        'PASSWORD': 'UWhKz27_h8Y_Ld62Fm8mgw',
-        'HOST': 'buff-crow-3663.g95.cockroachlabs.cloud',
-        'PORT': '26257',
-        'OPTIONS': {
-            'sslmode': 'verify-full',
-            #'options': '--cluster={routing-id}',
-            #'application_name': 'docs_simplecrud_django'
-        },
-    },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 
