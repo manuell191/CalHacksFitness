@@ -6,3 +6,5 @@ from .models import User
 def calculateBMI(request):
     return User.weight/User.height * 703;
 
+def home(request):
+    return render(request, 'home.html')
