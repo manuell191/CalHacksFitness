@@ -8,7 +8,8 @@ GOAL_BODY_TYPE = (
     ("BULK", "Bulk")
 )
 
-#Create your models here
+
+#Create your models here.
 class User(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bmi = models.IntegerField(default = 0)
