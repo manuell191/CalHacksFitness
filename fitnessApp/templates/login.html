@@ -1,11 +1,21 @@
 {% extends "base.html" %}
 
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+{% endblock head %}
+
 {% block content %}
+
+<div class="flex-center">
 <h1>Login</h1>
+</div>
 
 <hr>
 
-<form action="" method="post">
+<div class="flex-center">
+<form action="" method="post" class="flex-column">
     {% csrf_token %}
     {{ form.as_p }}
     {% if messages %}
@@ -17,5 +27,9 @@
     {% endif %}
     <input type="submit" value="Submit">
 </form>
-<a href="{% url 'signup' %}">Sign Up</a>
+</div>
+
+<div class="flex-center">
+<p>Already have an account?  <a href="{% url 'signup' %}" class="blue">Sign Up</a> </p>
+</div>
 {% endblock content %}
