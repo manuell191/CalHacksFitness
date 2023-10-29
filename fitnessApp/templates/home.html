@@ -6,4 +6,34 @@
 
 {% block content %}
 <h1>Hello World</h1>
+<form method="POST" action="{% url 'User-Input' %}">
+    {% csrf_token %}
+    <div>
+        <label for="username">Enter Username</label>
+        <input type="text" class="form-control" name="user" id="username">
+    </div>
+    <div>
+        <label for="height">Enter Height</label>
+        <input type="number" class="form-control" name="height" id="height">
+    </div>
+    <div>
+        <label for="weight">Enter Weight</label>
+        <input type="number" class="form-control" name="weight" id="weight">
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+<h1>Sign In</h1>
+<form method="POST" action="{%url 'sign-in' %}">
+    {% csrf_token %}
+    <div>
+        <label for="username">Username: </label>
+        <input type="text" name="username" id="username" required>
+    </div>
+    <div>
+        <label for="password">Password: </label>
+        <input type="text" name="username" id="username" required>
+    </div>
+    <button type="submit">Submit</button>
+</form>
 {% endblock content %}
