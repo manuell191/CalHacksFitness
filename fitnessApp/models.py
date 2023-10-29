@@ -10,11 +10,11 @@ GOAL_BODY_TYPE = (
 
 
 #Create your models here.
-class User(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bmi = models.IntegerField(default = 0)
-    weight = models.IntegerField(default = 0)
-    height = models.IntegerField(default = 0)
+    bmi = models.IntegerField(default=0)
+    weight = models.IntegerField(default=0)
+    height = models.IntegerField(default=0)
     goal = models.CharField(
         max_length = 20,
         choices = GOAL_BODY_TYPE,
