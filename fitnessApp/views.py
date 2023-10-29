@@ -2,14 +2,40 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .forms import LoginForm, SignupForm, SetupForm
+from .forms import LoginForm, SignupForm, SetupForm, UpdateForm
 from .models import Profile
 
 # Create your views here.
 def home(request):
     if not request.user.is_authenticated:
         return redirect('signup')
-    return render(request, 'home.html')
+    
+    profile = Profile.objects.get(user=request.user)
+
+    if request.method=='POST':
+        form = UpdateForm(request.POST)
+
+        if form.is_valid:
+            weight = int(request.POST.get('weight'))
+            weight += profile.weight
+
+            profile.weight = weight
+
+            profile.save()
+
+            return redirect('home')
+    
+    if profile.goal == "BULK":
+        workouts = ["Bench Press", "Squats", "Deadlifts", "Bicep Curls", "3700"]
+    elif profile.goal == "BUFF":
+        workouts = ["Squats", "Deadlifts", "Pull-ups", "Shoulder Press", "3500"]
+    elif profile.goal == "CUT":
+        workouts = ["Barbell Squats", "Romanian Deadlifts", "Pull-ups", "Incline Chest Press", "2000 Calories"]
+    elif profile.goal == "LEAN":
+        workouts = ["Squats", "Lunges", "Deadlifts", "Bicep Curls", "3000 Calories"]
+
+    context = {'form': UpdateForm, 'workouts': workouts, 'weight': profile.weight}
+    return render(request, 'home.html', context)
 
 def userLogin(request):
     if request.user.is_authenticated:
@@ -63,7 +89,9 @@ def setup(request, pk):
     if not request.user.is_authenticated:
         return redirect('login')
     
-    user = Profile.objects.get(id=pk)
+    u = User.objects.get(id=pk)
+
+    user = Profile.objects.get(user=u)
     
     if user.bmi != 0:
         return redirect('home')
@@ -83,7 +111,7 @@ def setup(request, pk):
 
             return redirect('home')
         
-    context = {'form': SetupForm}
+    context = {'form': SetupForm, 'user': u}
     return render(request, 'setup.html', context)
 
 def userLogout(request):
